@@ -352,13 +352,17 @@ const PROJECTS = [
     id:"mercadolibre", deep:true,
     tools:["SQL"], industry:{es:"E-commerce", en:"E-commerce"},
     title:{es:"Embudo y Retención — MercadoLibre", en:"Funnel & Retention — MercadoLibre"},
-    shortDesc:{es:"Funnels y cohortes con SQL para identificar el punto de abandono en el proceso de compra.", en:"Funnels and cohorts in SQL to find where users abandon the purchase process."},
-    repoUrl:"#",
-    images:[],
+    shortDesc:{es:"Funnel con -66pp de caída en Select→Cart y retención D28 de solo 2-3%.", en:"Funnel with a -66pp drop in Select→Cart and D28 retention of just 2-3%."},
+    repoUrl:"https://github.com/sergio-santoyo-data-analysis/mercadolibre-funnel-retention",
+    images:[
+      "https://raw.githubusercontent.com/sergio-santoyo-data-analysis/mercadolibre-funnel-retention/main/images/funnel_general.png",
+      "https://raw.githubusercontent.com/sergio-santoyo-data-analysis/mercadolibre-funnel-retention/main/images/retencion_cohorte.png",
+      "https://raw.githubusercontent.com/sergio-santoyo-data-analysis/mercadolibre-funnel-retention/main/images/retencion_pais.png"
+    ],
     problem:{es:"Identificar en qué punto del proceso de compra los usuarios abandonan y cómo evoluciona la retención con el tiempo y por país.", en:"Identify where in the purchase process users abandon and how retention evolves over time and by country."},
-    questions:{es:["¿En qué etapa perdemos la mayor cantidad de usuarios?","¿Cómo varía la retención según el grupo demográfico y el país?"], en:["At which stage do we lose the most users?","How does retention vary by demographic group and country?"]},
-    method:{es:["Limpieza, transformación y combinación de datos en SQL","Construcción de embudos con CTEs","Cálculo de KPIs financieros (ingresos, costos, margen, ROI)","Validación de resultados mediante QA","Comunicación de hallazgos con storytelling estructurado (C→F→I)"], en:["Data cleaning, transformation, and merging in SQL","Funnel construction with CTEs","Financial KPI calculation (revenue, cost, margin, ROI)","Result validation through QA","Structured storytelling communication (C→F→I)"]},
-    results:{es:["Identificación de mercados con oportunidades de inversión","Hallazgos validados y comunicados a stakeholders de forma estructurada"], en:["Identification of markets with investment opportunities","Findings validated and communicated to stakeholders in a structured way"]}
+    questions:{es:["¿Cuál es la tasa de conversión entre cada etapa del embudo?","¿En qué paso se observa la mayor caída de usuarios?","¿Cómo varía esta pérdida por país?","¿Cuál es la tasa de retención en D7, D14, D21 y D28?"], en:["What is the conversion rate between each funnel stage?","At which step is the biggest user drop-off?","How does this loss vary by country?","What is the retention rate at D7, D14, D21 and D28?"]},
+    method:{es:["Construcción de embudos multietapa en SQL usando CTEs","Cálculo de tasas de conversión entre pasos y detección de caídas","Segmentación del embudo por país","Análisis de retención por cohortes mensuales (D7/D14/D21/D28)","Segmentación de retención por país","Informe ejecutivo con hallazgos e implicaciones de negocio"], en:["Multi-stage funnel construction in SQL using CTEs","Step-to-step conversion rate calculation and drop-off detection","Funnel segmentation by country","Monthly cohort retention analysis (D7/D14/D21/D28)","Retention segmentation by country","Executive report with findings and business implications"]},
+    results:{es:["Caída crítica de -66pp entre Select Item (76.90%) y Add to Cart (11.01%) — el mayor punto de fuga del embudo","Conversión final de apenas 1.25%; Ecuador y Colombia pierden el 100% de usuarios antes de comprar","Retención D7 >85%, pero cae a solo 2-3% en D28 (>97% de abandono)","Uruguay como benchmark: mejor desempeño en todas las etapas del embudo"], en:["Critical -66pp drop between Select Item (76.90%) and Add to Cart (11.01%) — the funnel's biggest leak","Final conversion of just 1.25%; Ecuador and Colombia lose 100% of users before purchase","D7 retention >85%, but falls to just 2-3% by D28 (>97% churn)","Uruguay as benchmark: best performance across every funnel stage"]}
   },
   {
     id:"connectatel", deep:true,
