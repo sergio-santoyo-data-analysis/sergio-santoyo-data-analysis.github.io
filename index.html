@@ -369,8 +369,13 @@ const PROJECTS = [
     tools:["Python"], industry:{es:"Telecom", en:"Telecom"},
     title:{es:"Segmentación y Patrones de Uso — ConnectaTel", en:"Usage Patterns & Segmentation — ConnectaTel"},
     shortDesc:{es:"Segmentación de clientes y detección de outliers en telecomunicaciones (México y Colombia).", en:"Customer segmentation and outlier detection in telecom (Mexico and Colombia)."},
-    repoUrl:"#",
-    images:[],
+    repoUrl:"https://github.com/sergio-santoyo-data-analysis/connectatel-usage-segmentation",
+    images:[
+      "https://raw.githubusercontent.com/sergio-santoyo-data-analysis/connectatel-usage-segmentation/main/images/segmentacion_uso.png",
+      "https://raw.githubusercontent.com/sergio-santoyo-data-analysis/connectatel-usage-segmentation/main/images/segmentacion_edad.png",
+      "https://raw.githubusercontent.com/sergio-santoyo-data-analysis/connectatel-usage-segmentation/main/images/distribucion_edad.png",
+      "https://raw.githubusercontent.com/sergio-santoyo-data-analysis/connectatel-usage-segmentation/main/images/boxplot_minutos_llamada.png"
+    ],
     problem:{es:"Entender cómo usan los clientes los servicios móviles (llamadas y mensajes) para optimizar la oferta comercial.", en:"Understand how customers use mobile services (calls and messages) to optimize the commercial offer."},
     questions:{es:["¿Qué segmentos muestran mayor o menor uso?","¿Qué usuarios presentan valores atípicos?","¿Cómo varía el uso según edad y tipo de plan?"], en:["Which segments show higher or lower usage?","Which users show outlier values?","How does usage vary by age and plan type?"]},
     method:{es:["Limpieza de valores centinela y errores de fecha (~5% de la muestra)","Perfil estadístico de uso por cliente y segmento","Detección de outliers con método IQR","Segmentación de clientes por edad, país y consumo","Análisis ejecutivo con recomendaciones comerciales"], en:["Cleaning of sentinel values and date errors (~5% of the sample)","Statistical usage profile by customer and segment","Outlier detection with the IQR method","Customer segmentation by age, country, and consumption","Executive analysis with commercial recommendations"]},
