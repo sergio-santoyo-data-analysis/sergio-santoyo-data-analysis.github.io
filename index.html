@@ -75,8 +75,10 @@
   .filter-btn.active{background:var(--teal); border-color:var(--teal); color:var(--navy-bg); font-weight:600;}
 
   .gallery{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
-  .card{background:var(--paper); color:var(--ink); border-radius:6px; overflow:hidden; display:flex; flex-direction:column; border:1px solid transparent; transition:transform .15s, box-shadow .15s;}
+  .card{background:var(--paper); color:var(--ink); border-radius:6px; overflow:hidden; display:flex; flex-direction:column; border:1px solid transparent; position:relative; transition:transform .15s, box-shadow .15s;}
   .card:hover{transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.25);}
+  .card.featured{border-color:var(--amber); box-shadow:0 0 0 1px var(--amber);}
+  .featured-badge{position:absolute; top:10px; right:10px; z-index:2; font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.05em; background:var(--amber); color:var(--navy-bg); padding:4px 9px; border-radius:3px; font-weight:600;}
   .card-thumb{aspect-ratio:16/10; background:repeating-linear-gradient(135deg, #dde1e6, #dde1e6 10px, #d2d7dd 10px, #d2d7dd 20px); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); text-align:center; padding:10px;}
   .card-thumb img{width:100%; height:100%; object-fit:contain; background:#fff; padding:6px;}
   .card-body{padding:18px 20px 20px; display:flex; flex-direction:column; gap:10px; flex:1;}
@@ -86,6 +88,7 @@
   .tag.industry{background:rgba(201,138,46,.14); color:var(--amber-dim);}
   .card-title{font-family:var(--font-display); font-weight:600; font-size:16.5px; margin:0;}
   .card-desc{font-size:13px; color:var(--ink-soft); margin:0; flex:1;}
+  .card-impact{font-size:12px; color:var(--teal-deep); background:rgba(47,125,117,.08); border-left:2px solid var(--teal-deep); padding:8px 10px; margin:0;}
   .card-link{font-family:var(--font-mono); font-size:12px; color:var(--teal-deep); text-decoration:none; margin-top:4px;}
   .card-link:hover{text-decoration:underline;}
   .no-results{grid-column:1/-1; text-align:center; padding:40px; color:var(--paper-dim); font-family:var(--font-mono); font-size:13px;}
@@ -289,7 +292,7 @@ const I18N = {
     "about.p1":"Convierto datos desordenados de finanzas, retail y e-commerce en decisiones claras. Antes de dedicarme a datos pasé más de una década en ingeniería y operaciones — como Ingeniero de Campo de Wireline en Schlumberger y como Fundador / Líder de Operaciones y Datos de una empresa de automatización industrial.",
     "about.p2":"Como Analista de Datos certificado por TripleTen, aplico SQL, Python y Power BI a KPIs financieros, retención de usuarios y pruebas estadísticas.",
     "gallery.title":"Proyectos","gallery.sub":"Filtra por herramienta o industria. Los proyectos con \"Ver caso completo\" incluyen metodología y hallazgos a detalle.",
-    "gallery.tool":"Herramienta","gallery.industry":"Industria","gallery.all":"Todas","gallery.viewCase":"Ver caso completo","gallery.viewCode":"Ver código ↗","gallery.noResults":"No hay proyectos con esa combinación de filtros.",
+    "gallery.tool":"Herramienta","gallery.industry":"Industria","gallery.all":"Todas","gallery.viewCase":"Ver caso completo","gallery.viewCode":"Ver código ↗","gallery.noResults":"No hay proyectos con esa combinación de filtros.","gallery.featured":"Destacado","gallery.impact":"Impacto",
     "cases.title":"Casos de estudio",
     "exp.title":"Experiencia profesional","exp.present":"Presente",
     "exp.role1":"Fundador / Líder de Operaciones y Datos","exp.role2":"Ingeniero de Campo de Wireline","exp.role3":"Prácticas Profesionales",
@@ -313,7 +316,7 @@ const I18N = {
     "about.p1":"I turn messy data from finance, retail, and e-commerce into clear decisions. Before data, I spent over a decade in engineering and operations — as a Wireline Field Engineer at Schlumberger and as Founder / Operations & Data Lead of an industrial automation company.",
     "about.p2":"As a Data Analyst certified by TripleTen, I apply SQL, Python, and Power BI to financial KPIs, user retention, and statistical testing.",
     "gallery.title":"Projects","gallery.sub":"Filter by tool or industry. Projects with \"View full case\" include detailed methodology and findings.",
-    "gallery.tool":"Tool","gallery.industry":"Industry","gallery.all":"All","gallery.viewCase":"View full case","gallery.viewCode":"View code ↗","gallery.noResults":"No projects match that filter combination.",
+    "gallery.tool":"Tool","gallery.industry":"Industry","gallery.all":"All","gallery.viewCase":"View full case","gallery.viewCode":"View code ↗","gallery.noResults":"No projects match that filter combination.","gallery.featured":"Featured","gallery.impact":"Impact",
     "cases.title":"Case studies",
     "exp.title":"Professional experience","exp.present":"Present",
     "exp.role1":"Founder / Operations & Data Lead","exp.role2":"Wireline Field Engineer","exp.role3":"Professional Internship",
@@ -331,7 +334,7 @@ const I18N = {
 
 const PROJECTS = [
   {
-    id:"rappiplus", deep:true,
+    id:"rappiplus", deep:true, featured:true,
     tools:["SQL","Python","Power BI/Tableau"], industry:{es:"Delivery", en:"Delivery"},
     title:{es:"RappiPlus — De Datos a Decisiones de Negocio", en:"RappiPlus — From Data to Business Decisions"},
     shortDesc:{es:"Proyecto capstone: rentabilidad, funnel, retención y experimento A/B combinando SQL, Python y BI.", en:"Capstone project: profitability, funnel, retention and A/B test combining SQL, Python and BI."},
@@ -348,7 +351,7 @@ const PROJECTS = [
     results:{es:["Revenue de $51.95M con margen de 11.47% — negocio rentable","Conversión general del 80.04%; mayor fuga (12.29%) entre checkout y pago","Retención estable de ~42% en 3 semanas; se recomendó activación temprana","El cambio de UI (+0.60% conversión) no fue estadísticamente significativo (p=0.43)"], en:["$51.95M revenue with 11.47% margin — profitable business","80.04% overall conversion; largest drop-off (12.29%) between checkout and payment","Stable ~42% retention over 3 weeks; recommended early activation","UI change (+0.60% conversion) was not statistically significant (p=0.43)"]}
   },
   {
-    id:"mercadolibre", deep:true,
+    id:"mercadolibre", deep:true, featured:true,
     tools:["SQL"], industry:{es:"E-commerce", en:"E-commerce"},
     title:{es:"Embudo y Retención — MercadoLibre", en:"Funnel & Retention — MercadoLibre"},
     shortDesc:{es:"Funnel con -66pp de caída en Select→Cart y retención D28 de solo 2-3%.", en:"Funnel with a -66pp drop in Select→Cart and D28 retention of just 2-3%."},
@@ -402,6 +405,7 @@ const PROJECTS = [
     title:{es:"Drivers de Comportamiento — NovaRetail+", en:"Behavior Drivers — NovaRetail+"},
     shortDesc:{es:"Correlaciones entre comportamiento del cliente e ingreso anual.", en:"Correlations between customer behavior and annual revenue."},
     repoUrl:"https://github.com/sergio-santoyo-data-analysis/novaretail-behavior-drivers",
+    impact:{es:"Compras mensuales explican ~96% de la variación en ingreso anual (Pearson ≈0.96) — el driver dominante, muy por encima de publicidad o membresía premium.", en:"Monthly purchases explain ~96% of the variation in annual revenue (Pearson ≈0.96) — the dominant driver, far above advertising or premium membership."},
     images:["https://raw.githubusercontent.com/sergio-santoyo-data-analysis/novaretail-behavior-drivers/main/images/heatmap_correlaciones.png"]
   },
   {
@@ -410,6 +414,7 @@ const PROJECTS = [
     title:{es:"Validación A/B de Conversión", en:"A/B Conversion Validation"},
     shortDesc:{es:"Pruebas de hipótesis (T, Z, chi-cuadrado) sobre dos versiones de página.", en:"Hypothesis tests (T, Z, chi-square) on two page versions."},
     repoUrl:"https://github.com/sergio-santoyo-data-analysis/ab-test-landing-conversion",
+    impact:{es:"La página B logró +3.38pp de conversión y +$7.65 de gasto promedio por usuario, ambos estadísticamente significativos (p<0.001).", en:"Page B delivered +3.38pp conversion and +$7.65 average spend per user, both statistically significant (p<0.001)."},
     images:["https://raw.githubusercontent.com/sergio-santoyo-data-analysis/ab-test-landing-conversion/main/images/trafico_conversion_barras_apiladas.png"]
   },
   {
@@ -418,6 +423,7 @@ const PROJECTS = [
     title:{es:"Resumen Ejecutivo de Ventas — Walmart", en:"Executive Sales Summary — Walmart"},
     shortDesc:{es:"KPIs y tablas dinámicas en Google Sheets para preguntas comerciales clave.", en:"KPIs and pivot tables in Google Sheets for key business questions."},
     repoUrl:"https://github.com/sergio-santoyo-data-analysis/walmart-executive-sales-summary",
+    impact:{es:"Despensa y Básicos lidera con 15.23% de participación en ventas; Jardín/Aire Libre y Oficina/Escuela quedan por debajo del umbral mínimo de 5%.", en:"Grocery & Staples leads with 15.23% of total sales share; Garden/Outdoor and Office/School fall below the 5% minimum threshold."},
     images:["https://raw.githubusercontent.com/sergio-santoyo-data-analysis/walmart-executive-sales-summary/main/images/dashboard_walmart.png"]
   },
   {
@@ -426,6 +432,7 @@ const PROJECTS = [
     title:{es:"Desempeño Financiero — Adventure Works", en:"Financial Performance — Adventure Works"},
     shortDesc:{es:"Análisis de ingresos y rentabilidad por mercado con SQL.", en:"Revenue and profitability analysis by market using SQL."},
     repoUrl:"https://github.com/sergio-santoyo-data-analysis/adventureworks-financial-performance",
+    impact:{es:"Estados Unidos genera el mayor beneficio bruto y el ROI de marketing más alto (75.75%) — 3-4x el de mercados europeos con inversión similar.", en:"The U.S. generates the highest gross profit and marketing ROI (75.75%) — 3-4x higher than European markets with similar spend."},
     images:["https://raw.githubusercontent.com/sergio-santoyo-data-analysis/adventureworks-financial-performance/main/images/roi_vs_margen_pais.png"]
   },
   {
@@ -434,6 +441,7 @@ const PROJECTS = [
     title:{es:"Movilidad Urbana y Productividad — LATAM", en:"Urban Mobility & Productivity — LATAM"},
     shortDesc:{es:"Congestión vial vs. productividad económica en ciudades de LATAM.", en:"Traffic congestion vs. economic productivity in LATAM cities."},
     repoUrl:"https://github.com/sergio-santoyo-data-analysis/latam-urban-mobility-productivity",
+    impact:{es:"Bogotá combina alta congestión con PIB per cápita moderado-bajo, emergiendo como ciudad prioritaria para inversión en infraestructura de transporte.", en:"Bogotá combines high congestion with moderate-to-low GDP per capita, emerging as the priority city for transport infrastructure investment."},
     images:["https://raw.githubusercontent.com/sergio-santoyo-data-analysis/latam-urban-mobility-productivity/main/images/trafico_vs_pib_doble_eje.png"]
   }
 ];
@@ -499,7 +507,7 @@ function renderGallery(){
     const toolOk = activeTool==="all" || p.tools.includes(activeTool);
     const indOk = activeIndustry==="all" || p.industry[currentLang]===activeIndustry;
     return toolOk && indOk;
-  });
+  }).sort((a,b)=> (b.featured?1:0) - (a.featured?1:0));
 
   if(filtered.length===0){
     grid.innerHTML = `<div class="no-results">${t("gallery.noResults")}</div>`;
@@ -514,13 +522,17 @@ function renderGallery(){
     const link = p.deep
       ? `<a class="card-link" href="javascript:void(0)" onclick="scrollToCase('${p.id}')">${t("gallery.viewCase")}</a>`
       : `<a class="card-link" href="${p.repoUrl}" target="_blank" rel="noopener">${t("gallery.viewCode")}</a>`;
+    const badge = p.featured ? `<span class="featured-badge">${t("gallery.featured")}</span>` : "";
+    const impactLine = p.impact ? `<p class="card-impact"><strong>${t("gallery.impact")}:</strong> ${p.impact[currentLang]}</p>` : "";
     return `
-      <article class="card">
+      <article class="card${p.featured ? ' featured' : ''}">
+        ${badge}
         <div class="card-thumb">${thumb}</div>
         <div class="card-body">
           <div class="card-tags">${toolTags}<span class="tag industry">${p.industry[currentLang]}</span></div>
           <h3 class="card-title">${p.title[currentLang]}</h3>
           <p class="card-desc">${p.shortDesc ? p.shortDesc[currentLang] : ""}</p>
+          ${impactLine}
           ${link}
         </div>
       </article>`;
